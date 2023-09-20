@@ -13,7 +13,11 @@ class ManageUsers extends ManageRecords
     protected function getActions(): array
     {
         return [
+            Actions\ButtonAction::make('download pdf')
+                ->url(fn() => url('download/user'))
+                ->openUrlInNewTab(),
             Actions\CreateAction::make(),
+
         ];
     }
 }

@@ -17,7 +17,7 @@ class DownloadController extends Controller
                     $data = User::select('name as nama', 'address as alamat', 'phone_number as hp', 'specialist as spesialis')
                         ->get()->toArray();
                     $header = ['Nama', 'Alamat', 'HP', 'Spesialis'];
-                    $width = ['20%', '35%', '20%', '20%'];
+                    $width = ['25%', '40%', '15%', '15%'];
                     $title = 'Dokter / Perawat';
                     break;
             }

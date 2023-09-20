@@ -12,6 +12,7 @@
             font-family: Arial, Helvetica, sans-serif;
             border-collapse: collapse;
             width: 100%;
+            font-size: 10px;
         }
 
         #table td,

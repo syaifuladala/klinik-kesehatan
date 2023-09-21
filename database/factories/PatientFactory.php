@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -20,6 +21,7 @@ class PatientFactory extends Factory
         $gender = ['laki-laki', 'perempuan'];
         $type = ['konsultasi', 'skhpn'];
         return [
+            'medical_number' => 'RM' . Carbon::now()->format('my') . $this->generateUniqueFourDigitNumber(),
             'name' => fake()->name(),
             'phone_number' => fake()->phoneNumber(),
             'birth_place' => fake()->city(),
@@ -30,5 +32,11 @@ class PatientFactory extends Factory
             'gender' => $gender[array_rand($gender)],
             'type' => $type[array_rand($type)],
         ];
+    }
+
+    private function generateUniqueFourDigitNumber()
+    {
+        $number = fake()->unique()->numberBetween(1, 200);
+        return str_pad($number, 4, '0', STR_PAD_LEFT);
     }
 }

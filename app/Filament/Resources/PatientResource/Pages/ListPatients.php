@@ -13,6 +13,9 @@ class ListPatients extends ListRecords
     protected function getActions(): array
     {
         return [
+            Actions\ButtonAction::make('download pdf')
+                ->url(fn() => url('download/patient'))
+                ->openUrlInNewTab(),
             Actions\CreateAction::make(),
         ];
     }

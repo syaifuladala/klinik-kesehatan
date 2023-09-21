@@ -33,35 +33,45 @@ class PatientResource extends Resource
     {
         return $table
             ->columns([
+                TextColumn::make('medical_number')
+                    ->sortable()
+                    ->searchable()
+                    ->label('Nomor Rekam Medis'),
                 TextColumn::make('name')
                     ->sortable()
                     ->searchable()
                     ->label('Nama'),
-                TextColumn::make('identity_number')
+                TextColumn::make('type')
                     ->sortable()
                     ->searchable()
-                    ->label('Nomor Identitas'),
+                    ->label('Keperluan'),
+                TextColumn::make('created_at')
+                    ->sortable()
+                    ->searchable()
+                    ->label('Tanggal Daftar'),
             ])
             ->filters([
                 //
             ])
             ->actions([
-                Tables\Actions\ViewAction::make(),
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
+                Tables\Actions\ActionGroup::make([
+                    Tables\Actions\ViewAction::make(),
+                    Tables\Actions\EditAction::make(),
+                    Tables\Actions\DeleteAction::make(),
+                ])
             ])
             ->bulkActions([
                 // Tables\Actions\DeleteBulkAction::make(),
             ]);
     }
-    
+
     public static function getRelations(): array
     {
         return [
             //
         ];
     }
-    
+
     public static function getPages(): array
     {
         return [
@@ -69,5 +79,5 @@ class PatientResource extends Resource
             'create' => Pages\CreatePatient::route('/create'),
             'edit' => Pages\EditPatient::route('/{record}/edit'),
         ];
-    }    
+    }
 }

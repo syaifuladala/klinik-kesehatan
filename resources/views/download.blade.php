@@ -53,7 +53,7 @@
             @foreach($data as $item)
             <tr>
                 <td scope="row" style="text-align: center;">{{$loop->iteration}}</td>
-                @for ($i = 0; $i < count($header); $i++) <td width="{{$width[$i]}}">{{$item[strtolower($header[$i])]}}</td>
+                @for ($i = 0; $i < count($header); $i++) <td width="{{$width[$i]}}">{{$item[str_replace(' ', '_', strtolower($header[$i]))]}}</td>
                     @endfor
             </tr>
             @endforeach

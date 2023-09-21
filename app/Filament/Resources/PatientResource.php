@@ -5,7 +5,12 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\PatientResource\Pages;
 use App\Filament\Resources\PatientResource\RelationManagers;
 use App\Models\Patient;
+use Carbon\Carbon;
 use Filament\Forms;
+use Filament\Forms\Components\DatePicker;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\Textarea;
+use Filament\Forms\Components\TextInput;
 use Filament\Resources\Form;
 use Filament\Resources\Resource;
 use Filament\Resources\Table;
@@ -23,9 +28,59 @@ class PatientResource extends Resource
 
     public static function form(Form $form): Form
     {
+        $number = '0001';
+        $dateFormat = Carbon::now()->format('my');
+        $patient = Patient::select('medical_number')->latest()->first();
+        if ($patient) {
+            $matches = str_replace('RM'.$dateFormat, '', $patient->medical_number);
+            $number = str_pad((int)$matches + 1, 4, '0', STR_PAD_LEFT);
+        }
         return $form
             ->schema([
-                //
+                TextInput::make('medical_number')
+                    ->disabled()
+                    ->default('RM'.$dateFormat.$number)
+                    ->label('Nomor Rekam Medis'),
+                TextInput::make('name')
+                    ->required()
+                    ->label('Nama'),
+                TextInput::make('phone_number')
+                    ->required()
+                    ->label('No HP'),
+                Select::make('gender')
+                    ->required()
+                    ->options([
+                        'laki-laki' => 'Laki-laki',
+                        'perempuan' => 'Perempuan',
+                    ])
+                    ->label('Kartu Identitas'),
+                TextInput::make('birth_place')
+                    ->required()
+                    ->label('Tempat Lahir'),
+                DatePicker::make('birth_date')
+                    ->required()
+                    ->label('Tanggal Lahir'),
+                Select::make('identity_type')
+                    ->required()
+                    ->options([
+                        'ktp' => 'KTP',
+                        'sim' => 'SIM',
+                        'paspor' => 'Paspor',
+                    ])
+                    ->label('Kartu Identitas'),
+                TextInput::make('identity_number')
+                    ->required()
+                    ->label('Nomor Identitas'),
+                Textarea::make('address')
+                    ->required()
+                    ->label('Alamat'),
+                Select::make('type')
+                    ->required()
+                    ->options([
+                        'skhpn' => 'SKHPN',
+                        'konsultasi' => 'Konsultasi',
+                    ])
+                    ->label('Keperluan'),
             ]);
     }
 

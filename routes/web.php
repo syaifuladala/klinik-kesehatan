@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\DownloadController;
+use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -19,3 +20,5 @@ Route::get('/', function () {
 });
 
 Route::get('download/{model}', [DownloadController::class, 'getDownload']);
+
+Route::get('profile', [ProfileController::class, 'getProfile'])->name('profile');

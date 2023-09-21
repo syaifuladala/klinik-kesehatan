@@ -35,10 +35,19 @@ class UserResource extends Resource
                     ->required()
                     ->label('Email'),
                 TextInput::make('password')
-                    ->password()
+                    ->password(true)
                     ->minLength(8)
                     ->required()
+                    ->hiddenOn('edit')
+                    ->visibleOn('create')
+                    ->currentPassword()
                     ->label('Password'),
+                TextInput::make('passwordConfirmation')
+                    ->required()
+                    ->password()
+                    ->dehydrated(false)
+                    ->extraAttributes(['class' => 'password-toggle'])
+                    ->label('Konfirmasi Password'),
                 Textarea::make('address')
                     ->maxLength(255)
                     ->rows(3)

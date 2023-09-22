@@ -11,4 +11,8 @@ class Patient extends Model
 
     protected $guarded = [];
 
+    public function medicalReports()
+    {
+        return $this->hasMany(MedicalReport::class);
+    }
 }

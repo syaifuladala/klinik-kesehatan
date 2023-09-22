@@ -101,6 +101,7 @@ class PatientResource extends Resource
                     ->searchable()
                     ->label('Keperluan'),
                 TextColumn::make('created_at')
+                    ->dateTime('d M Y')
                     ->sortable()
                     ->searchable()
                     ->label('Tanggal Daftar'),

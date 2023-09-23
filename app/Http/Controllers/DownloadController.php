@@ -77,7 +77,6 @@ class DownloadController extends Controller
                     $title = 'Daftar Medical Report';
             }
 
-            dd($data);
             $convert = [
                 'title' => $title,
                 'header' => $header,

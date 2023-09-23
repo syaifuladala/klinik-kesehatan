@@ -12,6 +12,7 @@ use Filament\Resources\Table;
 use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\Layout;
+use Phpsa\FilamentPasswordReveal\Password;
 
 class UserResource extends Resource
 {
@@ -30,30 +31,20 @@ class UserResource extends Resource
                     ->email()
                     ->required()
                     ->label('Email'),
-                TextInput::make('password')
-                    ->password(true)
+                Password::make('password')
                     ->minLength(8)
                     ->required()
-                    ->hiddenOn('edit')
-                    ->hiddenOn('view')
+                    ->hiddenOn(['view', 'edit'])
                     ->visibleOn('create')
-                    ->currentPassword()
-                    ->label('Password'),
-                TextInput::make('passwordConfirmation')
-                    ->required()
-                    ->password()
-                    ->dehydrated(false)
-                    ->hiddenOn('edit')
-                    ->hiddenOn('view')
-                    ->visibleOn('create')
-                    ->label('Konfirmasi Password'),
+                    ->label('Kata Sandi'),
                 Textarea::make('address')
                     ->maxLength(255)
                     ->rows(3)
-                    ->label('address'),
+                    ->label('Alamat'),
                 TextInput::make('phone_number')
                     ->tel()
-                    ->telRegex('/^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\.\/0-9]*$/'),
+                    ->telRegex('/^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\.\/0-9]*$/')
+                    ->label('No HP'),
                 TextInput::make('specialist')
                     ->label('Spesialis'),
             ]);

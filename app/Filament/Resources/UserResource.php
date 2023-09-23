@@ -3,9 +3,7 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\UserResource\Pages;
-use App\Filament\Resources\UserResource\RelationManagers;
 use App\Models\User;
-use Filament\Forms;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Resources\Form;
@@ -14,8 +12,6 @@ use Filament\Resources\Table;
 use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\Layout;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class UserResource extends Resource
 {
@@ -39,6 +35,7 @@ class UserResource extends Resource
                     ->minLength(8)
                     ->required()
                     ->hiddenOn('edit')
+                    ->hiddenOn('view')
                     ->visibleOn('create')
                     ->currentPassword()
                     ->label('Password'),
@@ -46,7 +43,9 @@ class UserResource extends Resource
                     ->required()
                     ->password()
                     ->dehydrated(false)
-                    ->extraAttributes(['class' => 'password-toggle'])
+                    ->hiddenOn('edit')
+                    ->hiddenOn('view')
+                    ->visibleOn('create')
                     ->label('Konfirmasi Password'),
                 Textarea::make('address')
                     ->maxLength(255)
@@ -63,6 +62,7 @@ class UserResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+            ->defaultSort('name', 'asc')
             ->columns([
                 TextColumn::make('name')
                     ->label('Nama')

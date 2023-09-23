@@ -13,6 +13,6 @@ class Patient extends Model
 
     public function medicalReports()
     {
-        return $this->hasMany(MedicalReport::class);
+        return $this->hasMany(MedicalReport::class)->orderByDesc('date');
     }
 }

@@ -9,7 +9,10 @@ use Filament\Widgets\DoughnutChartWidget;
 class PatientChart extends DoughnutChartWidget
 {
     protected static ?string $heading = 'Total Pasien';
-    protected static ?string $maxHeight = '500px';
+    protected static ?string $pollingInterval = '10s';
+    protected static ?string $maxHeight = '300px';
+    protected static ?int $sort = 2;
+    protected int | string | array $columnSpan = 'full';
 
     protected function getData(): array
     {

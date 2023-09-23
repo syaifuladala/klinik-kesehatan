@@ -94,8 +94,12 @@ class DownloadController extends Controller
     public function getPatientDownload($id)
     {
         try {
-            $patient = Patient::find($id);
-            return view('patient');
+            $patient = Patient::with('medicalReports')->find($id);
+            $data = [
+                'data' => $patient,
+            ];
+            $pdf = PDF::loadView('patient', $data);
+            return $pdf->download('RM ' . $patient->name . ' ' . Carbon::now()->format('d-m-Y') . '.pdf');
         } catch (\Exception $e) {
             return $e;
         }

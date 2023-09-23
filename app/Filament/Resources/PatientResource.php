@@ -53,7 +53,7 @@ class PatientResource extends Resource
                     'laki-laki' => 'Laki-laki',
                     'perempuan' => 'Perempuan',
                 ])
-                ->label('Kartu Identitas'),
+                ->label('Jenis Kelamin'),
             TextInput::make('birth_place')
                 ->required()
                 ->label('Tempat Lahir'),

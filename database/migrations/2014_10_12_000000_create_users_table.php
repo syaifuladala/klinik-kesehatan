@@ -24,6 +24,7 @@ return new class extends Migration
             $table->string('specialist')->nullable();
             $table->rememberToken();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

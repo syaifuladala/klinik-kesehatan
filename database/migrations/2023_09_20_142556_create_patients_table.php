@@ -26,6 +26,7 @@ return new class extends Migration
             $table->string('gender');
             $table->string('type');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

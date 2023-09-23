@@ -20,8 +20,9 @@ class PatientFactory extends Factory
         $identityType = ['sim', 'ktp', 'paspor'];
         $gender = ['laki-laki', 'perempuan'];
         $type = ['konsultasi', 'skhpn'];
+        $createdAt = fake()->dateTimeBetween('-2 years', 'now');
         return [
-            'medical_number' => 'RM' . Carbon::now()->format('my') . $this->generateUniqueFourDigitNumber(),
+            'medical_number' => 'RM' . Carbon::parse($createdAt)->format('my') . $this->generateUniqueFourDigitNumber(),
             'name' => fake()->name(),
             'phone_number' => fake()->phoneNumber(),
             'birth_place' => fake()->city(),
@@ -31,6 +32,7 @@ class PatientFactory extends Factory
             'address' => fake()->address(),
             'gender' => $gender[array_rand($gender)],
             'type' => $type[array_rand($type)],
+            'created_at' => $createdAt,
         ];
     }
 

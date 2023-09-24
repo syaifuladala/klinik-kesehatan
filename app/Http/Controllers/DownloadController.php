@@ -51,19 +51,15 @@ class DownloadController extends Controller
                         ->join('patients', 'medical_reports.patient_id', '=', 'patients.id')
                         ->join('users', 'medical_reports.user_id', '=', 'users.id');
 
-                    if (!empty(request()->input('date'))) {
-                        $filter = request()->input('date');
-                        if (!empty($filter['date_from'])) {
-                            $dateFrom = Carbon::parse($filter['date_from'])->format('Y-m-d');
-                            $report = $report->where('medical_reports.date', '>=', $dateFrom);
-                        }
-                        if (!empty($filter['date_until'])) {
-                            $dateFrom = Carbon::parse($filter['date_until'])->format('Y-m-d');
-                            $report = $report->where('medical_reports.date', '<=', $dateFrom);
-                        }
+                    if (!empty(request()->input('date_from'))) {
+                        $report = $report->where('medical_reports.date', '>=', Carbon::parse(request()->input('date_from'))->format('Y-m-d'));
                     }
 
-                    $report = $report->get();
+                    if (!empty(request()->input('date_until'))) {
+                        $report = $report->where('medical_reports.date', '<=', Carbon::parse(request()->input('date_until'))->format('Y-m-d'));
+                    }
+
+                    $report = $report->orderByDesc('medical_reports.date')->get();
                     $data = $report->map(function ($record) {
                         return [
                             'tanggal_periksa' => $record->tanggal_periksa,

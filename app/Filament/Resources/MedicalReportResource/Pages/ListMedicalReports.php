@@ -5,6 +5,7 @@ namespace App\Filament\Resources\MedicalReportResource\Pages;
 use App\Filament\Resources\MedicalReportResource;
 use Filament\Pages\Actions;
 use Filament\Resources\Pages\ListRecords;
+use Illuminate\Database\Eloquent\Collection;
 
 class ListMedicalReports extends ListRecords
 {
@@ -12,18 +13,16 @@ class ListMedicalReports extends ListRecords
 
     protected function getActions(): array
     {
+        $dateFrom = null;
+        $dateUntil = null;
         $url = 'download/medical-report';
-        if (!empty(request()->input('tableFilters'))) {
-            $filter = request()->input('tableFilters');
-            $params = $filter['date'];
-            if (!empty($params['date_from'])) {
-                $dateParam = 'date[date_from]=' . $params['date_from'];
-            } else if (!empty($params['date_until'])) {
-                $dateParam = 'date[date_until]=' . $params['date_until'];
-            } else if (!empty($params['date_from']) && !empty($params['date_until'])) {
-                $dateParam = 'date[date_until]=' . $params['date_until'] . '&date[date_until]=' . $params['date_until'];
-            }
-            $url = 'download/medical-report?' . $dateParam;
+
+        $record = $this->getFilteredTableQuery();
+        $date = $this->removePercentageElements($record->getBindings());
+        if (count($date) > 0) {
+            $dateFrom = !empty($date[0]) ? $date[0] : null;
+            $dateUntil = !empty($date[1]) ? $date[1] : null;
+            $url = 'download/medical-report?date_from='.$dateFrom.'&date_until='.$dateUntil;
         }
 
         return [
@@ -32,5 +31,11 @@ class ListMedicalReports extends ListRecords
                 ->openUrlInNewTab(),
             Actions\CreateAction::make(),
         ];
+    }
+
+    function removePercentageElements($array) {
+        return array_values(array_filter($array, function($element) {
+            return strpos($element, '%') === false;
+        }));
     }
 }
